@@ -2,6 +2,13 @@ import { DHXView } from "dhx-optimus";
 
 export class EventFormView extends DHXView {
 	render() {
+        
+        this.toolbar = this.root.attachToolbar({
+			iconset: "awesome",
+		});
+        this.toolbar.addButton("save", 1, "Save", "", "");
+        
+
 		this.ui = this.root.attachForm([
 			{
 				type: "block", name: "form_block_3", list: [

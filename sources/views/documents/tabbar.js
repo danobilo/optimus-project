@@ -4,6 +4,7 @@ import { FilesView } from "../files/layout";
 import { EventsView } from "../events/layout";
 import { DocumentHistoryView } from "./history/layout";
 import { CommentsView } from "./comments/layout";
+import { DocumentFormTopbarView } from "./details/toolbar";
 export class DocumentsTabbarView extends DHXView {
 	render() {
 		this.ui = this.root.attachTabbar({
@@ -17,6 +18,7 @@ export class DocumentsTabbarView extends DHXView {
 
 		this.ui.addTab("tab_19", "Details");
 		var tab_19 = this.ui.cells("tab_19");
+		this.show(DocumentFormTopbarView, tab_19);
 		this.show(DocumentFormView, tab_19);
 
 		this.ui.addTab("tab_20", "Files");
