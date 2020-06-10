@@ -3,9 +3,9 @@ import {DHXView} from "dhx-optimus";
 export class ProjectFormView extends DHXView{
 	render(){
 		this.ui = this.root.attachForm([
-			{type: "settings", labelWidth: 150, inputWidth: 400, offsetLeft: "10", offsetTop: "0"},
+			{type: "settings", labelWidth: 100, inputWidth: 400, offsetLeft: "10", offsetTop: "0"},
 			{
-				type: "block", name: "form_block_3", blockOffset: 30, offsetTop: 15, width: "auto", list: [
+				type: "block", name: "form_block_3", blockOffset: 10, offsetTop: 15, width: "auto", list: [
 					{type: "hidden", name: "id", label: "ID", readonly: true},
 					{type: "input", name: "project_id", label: "ID", readonly: true},
 					{type: "input", name: "title", label: "Description"},
