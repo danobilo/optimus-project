@@ -8,6 +8,8 @@ export class ProjectTopbarView extends DHXView{
 		// this.ui.setIconSize(32);
 		this.ui.attachEvent("onClick", (id) => this.callEvent("ProjectToolbarClick", [id]));
 		this._load();
+
+
 	}
 
 	_load(){

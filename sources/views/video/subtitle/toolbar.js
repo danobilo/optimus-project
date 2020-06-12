@@ -17,13 +17,13 @@ export class AudioLanguageTopbarView extends DHXView {
 				text: "New",
 				width: 70,
 				options: [
-          { id: "english", type: "button", text: "English", img: "" },
-          { id: "german", type: "button", text: "German", img: "" },
-          { id: "dutch", type: "button", text: "Dutch", img: "" },
+					{ id: "english", type: "button", text: "English", img: "" },
+					{ id: "german", type: "button", text: "German", img: "" },
+					{ id: "dutch", type: "button", text: "Dutch", img: "" },
 				],
 			},
-      { id: "button_separator_43", type: "separator" },
-      { id: "delete", type: "button", text: "Delete" },
+			{ id: "button_separator_43", type: "separator" },
+			{ id: "delete", type: "button", text: "Delete" },
 		];
 
 		this.ui.loadStruct(struct);
