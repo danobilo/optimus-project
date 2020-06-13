@@ -3,40 +3,30 @@ import { getProjects, createProjects, deleteProject } from "../../api/projectsAp
 import { ProjectsFormStruct } from "./projects_form";
 
 export class ProjectTreeView extends DHXView {
+					
 	render() {
-		
-		this.ui = this.root.attachTreeView();
-		this.ui.enableDragAndDrop(true);
-		this.ui.enableContextMenu(true);
-		this._load();
-
-		let struct = [
-			{ id: "new", text: "New", items:[
-				{ id: "main", text: "Main Item"},
-				{ id: "sub", text: "Sub Item"},
-			]},
-			{id: "type", text: "Type", items:[
-				{ id: "1", type: "checkbox", text: "Video"},
-				{ id: "2", type: "checkbox", text: "Audio"},
-				{ id: "3", type: "checkbox", text: "Moodle"},
-			]},
-			{ id: "delete", text: "Delete"}
-		];
 
 		// initialize dhtmlx menu
 		let menu = new dhtmlXMenuObject({
 			context: true, // render it as context menu
 		});
-		menu.loadStruct(struct);
+		this._loadMenu(menu);
+		menu.attachEvent("onClick", this.menuClicked);
+
+		this.ui = this.root.attachTreeView();
+		this.ui.enableDragAndDrop(true);
+		this.ui.enableContextMenu(true);
+		this._load();		
 
 		this.ui.attachEvent("onContextMenu", function (id, x, y, ev) {
+
+			this.selectItem(id);
 		// show context menu here
 			menu.showContextMenu(x, y);
 
 		// prevent default context menu
 			return false;
-		});
-		
+		});		
 
 		this.attachEvent("ProjectToolbarClick", (id) => {
 			let item_id = this.ui.getSelectedId();
@@ -44,20 +34,7 @@ export class ProjectTreeView extends DHXView {
 
 			switch (id) {
 				case "main":
-					this.window = new dhtmlXWindows();
-					this.window_1 = this.window.createWindow("add_root_win", 0, 0, 400, 150);
-					this.window_1.center();
-					this.window_1.setText("Add New Category");
-
-					this.window_1.form = this.window_1.attachForm();
-					this._loadForm("main");
-
-					this.window_1.form.attachEvent("onButtonClick", () => {
-						this.window_1.form.setItemValue("level", 0);
-						let project = this.window_1.form.getFormData();
-						createProjects(this, project);
-					});
-
+					this._addProject();
 					break;
 
 				case "sub":
@@ -68,22 +45,8 @@ export class ProjectTreeView extends DHXView {
 							title: "Error!",
 						});
 						return;
-					}
-
-					this.window = new dhtmlXWindows();
-					this.window_1 = this.window.createWindow("add_sub_win", 0, 0, 400, 150);
-					this.window_1.center();
-					this.window_1.setText("Add Sub Category");
-
-					this.window_1.form = this.window_1.attachForm();
-					this._loadForm("sub");
-
-					this.window_1.form.attachEvent("onButtonClick", () => {
-						this.window_1.form.setItemValue("parent_id", item_id);
-						this.window_1.form.setItemValue("level", 1);
-						let project = this.window_1.form.getFormData();
-						createProjects(this, project);
-					});
+					}				
+					this._addProject(item_id, 1);
 
 					break;
 
@@ -96,7 +59,7 @@ export class ProjectTreeView extends DHXView {
 						});
 						return;
 					}
-					deleteProject(this, item_id);
+					this._deleteItem(item_id);
 
 					break;
 
@@ -110,24 +73,60 @@ export class ProjectTreeView extends DHXView {
 		getProjects(this.ui);
 	}
 
+	_loadMenu(menu){
+		let struct = [
+			{ id: "new", text: "New", items:[
+				{ id: "main", text: "Main Item"},
+				{ id: "sub", text: "Sub Item"},
+			]},
+			{id: "type", text: "Type", items:[
+				{ id: "1", type: "checkbox", text: "Video"},
+				{ id: "2", type: "checkbox", text: "Audio"},
+				{ id: "3", type: "checkbox", text: "Moodle"},
+			]},
+			{ id: "delete", text: "Delete"}
+		];
+
+		menu.loadStruct(struct);
+	}
+
+	_addProject(item_id = 0, level = 0){
+
+		this.window = new dhtmlXWindows();	
+		let window_1 = this.window.createWindow("add_root_win", 0, 0, 400, 150);
+		window_1.center();
+		window_1.setText("Add New Category");
+
+		let form = window_1.attachForm();
+		this._loadForm(form, "sub");
+
+		form.attachEvent("onButtonClick", () => {
+			form.setItemValue("level", level);
+			form.setItemValue("parent_id", item_id);
+			let project = form.getFormData();
+			createProjects(this, project);
+		});
+	}
+
 	_refresh() {
 		this.ui.clearAll();
 		this._load();
 	}
 
-	_loadForm(id) {
-		this.window_1.form.load(ProjectsFormStruct[id], () => {
-			this.window_1.form.setItemFocus("title");
+	_loadForm(form, id) {
+		form.load(ProjectsFormStruct[id], () => {
+			form.setItemFocus("title");
 		});
 	}
 
 	_addItem(id, title, parent) {
-		this.ui.addItem(id, title, parent);
-		this.ui.selectItem(id);
+		this.ui.addItem(id, title, parent);		
+		this.ui.selectItem(id);	
 	}
 
 	_deleteItem(id) {
 		this.ui.deleteItem(id);
+		deleteProject(id);
 	}
 
 	_selectedItemCheck(item_id) {
@@ -141,4 +140,17 @@ export class ProjectTreeView extends DHXView {
 			return;
 		}
 	}
+
+	menuClicked(id) {
+
+		switch (id) {
+	
+			case "main":	
+				this._addProject();
+				break;
+		}
+	}
 }
+
+
+	

@@ -8,3 +8,5 @@ dist/
 *.tgz
 *.log
 .vscode
+.idea/
+/nbproject/private/
