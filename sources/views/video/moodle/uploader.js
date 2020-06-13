@@ -16,7 +16,7 @@ export class MoodleUploaderView extends DHXView {
 			},
 		]);
 		this._load();
-		this.ui.centerForm();
+		// this.ui.centerForm();
     // this.attachEvent("onContactSelect", e =>this._update(e.data.photo,e.data));
 	}
 	_load() {

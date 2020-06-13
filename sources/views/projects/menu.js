@@ -1,26 +1,28 @@
 import { DHXView } from "dhx-optimus";
 
-export class ProjectMenu extends DHXView {
+export class ProjectMenuView extends DHXView {
 	render() {
-		let struct = [
-			{
-				id: "l_num", // required, will be generated automatically if empty
-				type: "checkbox", // required, item type
-				text: "Line Numbering", // required, item text
-				checked: true, // optional, true to check on init
-				hotkey: "Ctrl+L N", // optional, hotkey (text in menu only)
-				userdata: {
-          // optional, userdata, name:value pairs
-					p1: "value1",
-					p2: "value2",
-				},
-			},
-		];
 
-    // initialize dhtmlx menu
-		let menu = new dhtmlXMenuObject({
+		this.ui = new dhtmlXMenuObject({
 			context: true, // render it as context menu
 		});
-		menu.loadStruct(struct);
-	}
+		this._load();
+    }
+    
+    _load(){
+		let struct = [
+			{ id: "new", text: "New", items:[
+				{ id: "main", text: "Main Item"},
+				{ id: "sub", text: "Sub Item"},
+			]},
+			{id: "type", text: "Type", items:[
+				{ id: "1", type: "checkbox", text: "Video"},
+				{ id: "2", type: "checkbox", text: "Audio"},
+				{ id: "3", type: "checkbox", text: "Moodle"},
+			]},
+			{ id: "delete", text: "Delete"}
+		];
+
+		this.ui.loadStruct(struct);
+    }
 }

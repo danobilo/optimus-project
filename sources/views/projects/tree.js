@@ -6,21 +6,31 @@ export class ProjectTreeView extends DHXView {
 					
 	render() {
 
+		let pId = null;
+
 		// initialize dhtmlx menu
 		let menu = new dhtmlXMenuObject({
 			context: true, // render it as context menu
 		});
 		this._loadMenu(menu);
-		menu.attachEvent("onClick", this.menuClicked);
+		menu.attachEvent("onClick", (id) => this.app.callEvent("ProjectMenuClick", [id]));		
 
 		this.ui = this.root.attachTreeView();
 		this.ui.enableDragAndDrop(true);
-		this.ui.enableContextMenu(true);
-		this._load();		
+		this.ui.enableContextMenu(true);		
+
+		this.ui.attachEvent("onSelect", (id) => pId = id );
+
+		this.ui.attachEvent("onClick", (id) => pId = id );
+
+		this.addService("ProjectTree", {
+            selected:() => pId
+        });
 
 		this.ui.attachEvent("onContextMenu", function (id, x, y, ev) {
 
 			this.selectItem(id);
+			pId = id;
 		// show context menu here
 			menu.showContextMenu(x, y);
 
@@ -28,9 +38,29 @@ export class ProjectTreeView extends DHXView {
 			return false;
 		});		
 
+
+		this._load();		
+
+		this.attachEvent("ProjectMenuClick", (id) => {
+
+			if(id == "main"){
+				this._addProject();
+
+			} else if( id == "sub"){
+
+				if (!this._itemIsSelected()) {
+					dhtmlx.alert({
+						type: "alert-error",
+						text: "First select an Item.",
+						title: "Error!",
+					});
+					return;
+				}				
+				this._addProject(pId, 1);
+			}
+		});
+		
 		this.attachEvent("ProjectToolbarClick", (id) => {
-			let item_id = this.ui.getSelectedId();
-			let is_item_id = item_id > 0;
 
 			switch (id) {
 				case "main":
@@ -38,7 +68,7 @@ export class ProjectTreeView extends DHXView {
 					break;
 
 				case "sub":
-					if (!is_item_id) {
+					if (!this._itemIsSelected()) {
 						dhtmlx.alert({
 							type: "alert-error",
 							text: "First select an Item.",
@@ -46,12 +76,12 @@ export class ProjectTreeView extends DHXView {
 						});
 						return;
 					}				
-					this._addProject(item_id, 1);
+					this._addProject(pId, 1);
 
 					break;
 
 				case "delete":
-					if (!is_item_id) {
+					if (!this._itemIsSelected()) {
 						dhtmlx.alert({
 							type: "alert-error",
 							text: "First select an Item.",
@@ -59,7 +89,7 @@ export class ProjectTreeView extends DHXView {
 						});
 						return;
 					}
-					this._deleteItem(item_id);
+					this._deleteItem(pId);
 
 					break;
 
@@ -129,27 +159,10 @@ export class ProjectTreeView extends DHXView {
 		deleteProject(id);
 	}
 
-	_selectedItemCheck(item_id) {
-		let is_item_id = item_id > 0;
-		if (!is_item_id) {
-			dhtmlx.alert({
-				type: "alert-error",
-				text: "First select an Item.",
-				title: "Error!",
-			});
-			return;
-		}
+	_itemIsSelected() {
+		return this.pId > 0;
 	}
 
-	menuClicked(id) {
-
-		switch (id) {
-	
-			case "main":	
-				this._addProject();
-				break;
-		}
-	}
 }
 
 
