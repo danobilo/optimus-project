@@ -15,10 +15,10 @@ export class ProjectTopbarView extends DHXView{
 	_load(){
 		let struct = [
 			{type:"buttonSelect",text:"Select",renderSelect: true, mode:"select", selected:"all", options: [
-				{id:"video",type:"button",text:"Video",img:""},
-				{id:"audio",type:"button",text:"Audio",img:""},
-                {id:"moodle",type:"button",text:"Moodle",img:""},
-                {id:"all",type:"button",text:"All",img:""},
+				{id:"0",type:"button",text:"All",img:""},
+				{id:"1",type:"button",text:"Video",img:""},
+				{id:"2",type:"button",text:"Audio",img:""},
+                {id:"3",type:"button",text:"Moodle",img:""}                
 			]},
 			{id:"button_separator_7",type:"separator"},
 			{type:"buttonSelect",text:"New",options: [

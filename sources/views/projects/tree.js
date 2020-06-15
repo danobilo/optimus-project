@@ -1,5 +1,5 @@
 import { DHXView } from "dhx-optimus";
-import { getProjects, createProjects, deleteProject } from "../../api/projectsApi";
+import { getProjects, createProjects, deleteProject, addProjectType } from "../../api/projectsApi";
 import { ProjectsFormStruct } from "./projects_form";
 
 export class ProjectTreeView extends DHXView {
@@ -13,13 +13,18 @@ export class ProjectTreeView extends DHXView {
 			context: true, // render it as context menu
 		});
 		this._loadMenu(menu);
-		menu.attachEvent("onClick", (id) => this.app.callEvent("ProjectMenuClick", [id]));		
+		menu.attachEvent("onClick", (id) => this.app.callEvent("ProjectMenuClick", [id]));	
+		menu.attachEvent("onCheckboxClick", (id, state) => {
+			
+			this.app.callEvent("ProjectMenuCheckboxClick", [id, state, menu.getItemText(id)]);
+
+			// allow checkbox to be checked
+			return true;
+		});	
 
 		this.ui = this.root.attachTreeView();
 		this.ui.enableDragAndDrop(true);
 		this.ui.enableContextMenu(true);		
-
-		this.ui.attachEvent("onSelect", (id) => pId = id );
 
 		this.ui.attachEvent("onClick", (id) => pId = id );
 
@@ -30,7 +35,21 @@ export class ProjectTreeView extends DHXView {
 		this.ui.attachEvent("onContextMenu", function (id, x, y, ev) {
 
 			this.selectItem(id);
-			pId = id;
+
+			// menu.forEachItem(function(itemId){
+
+			// 	var type = menu.getItemType(itemId);
+			// 	if(type == "checkbox"){
+			// 		var state = this.getUserData(id, menu.getItemText(itemId)) ? true: false;
+			// 		menu.setCheckboxState(itemId, false);
+			// 	}
+
+			// });
+
+			menu.setCheckboxState(1, this.getUserData(id,"Video") == "1" ? true:false);
+			menu.setCheckboxState(2, this.getUserData(id,"Audio") == "1" ? true:false);
+			menu.setCheckboxState(3, this.getUserData(id,"Moodle") == "1" ? true:false);
+
 		// show context menu here
 			menu.showContextMenu(x, y);
 
@@ -41,6 +60,31 @@ export class ProjectTreeView extends DHXView {
 
 		this._load();		
 
+		this.attachEvent("ProjectMenuCheckboxClick", (context_id, state, name) => {
+
+			var value = state ? "0" : "1";
+			var ids = this._addSubItemsType(this.ui.getSelectedId(), context_id, value, name);
+
+			// console.log(ids);
+
+			this._addProjectType(ids, context_id, value);	
+
+
+			// var tree_id = this.ui.getSelectedId();
+
+			// this.ui.setUserData(tree_id, name, value);			
+			
+			// this._addProjectType(id, state, name);	
+
+			// let subItems = this.ui.getSubItems(this.ui.getSelectedId());
+
+			// if(subItems.length > 0){
+			// 	_addSubItemsType(subItems);
+			// }
+			
+		});
+
+		
 		this.attachEvent("ProjectMenuClick", (id) => {
 
 			if(id == "main"){
@@ -56,7 +100,9 @@ export class ProjectTreeView extends DHXView {
 					});
 					return;
 				}				
-				this._addProject(pId, 1);
+				this._addProject(this.ui.getSelectedId(), 1);
+			} else if(id == "delete") {
+				this._deleteItem(this.ui.getSelectedId());
 			}
 		});
 		
@@ -76,7 +122,7 @@ export class ProjectTreeView extends DHXView {
 						});
 						return;
 					}				
-					this._addProject(pId, 1);
+					this._addProject(this.ui.getSelectedId(), 1);
 
 					break;
 
@@ -89,18 +135,42 @@ export class ProjectTreeView extends DHXView {
 						});
 						return;
 					}
-					this._deleteItem(pId);
+					this._deleteItem(this.ui.getSelectedId());
 
 					break;
 
+				case "search":
+					break;
+
 				default:
+
+					this.ui.clearAll();
+					this._load(id);
+
 					break;
 			}
 		});
 	}
 
-	_load() {
-		getProjects(this.ui);
+	_addSubItemsType(tree_id, id, value, name, ids = []) {	
+		
+		if(tree_id == null)
+			return;
+		
+		this.ui.setUserData(tree_id, name, value);		
+
+		let subItems = this.ui.getSubItems(tree_id);
+
+		ids.push(tree_id);
+		subItems.forEach(element => {			
+			this._addSubItemsType(element, id, value, name, ids);
+		});
+
+		return ids;
+	}
+
+	_load(id = 0) {
+		getProjects(this.ui, id);
 	}
 
 	_loadMenu(menu){
@@ -160,7 +230,14 @@ export class ProjectTreeView extends DHXView {
 	}
 
 	_itemIsSelected() {
-		return this.pId > 0;
+		return this.ui.getSelectedId() > 0;
+	}
+
+	_addProjectType( ids, type, value){
+		
+		let data = { ids:ids, type_id: type, n_value: value };
+		addProjectType(data);
+
 	}
 
 }

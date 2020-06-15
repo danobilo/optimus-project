@@ -6,9 +6,9 @@ const appAlerts = new DHXAlertView();
 
 const baseUrl = getBaseUrl();
 
-export function getProjects(context) {
+export function getProjects(context, type) {
 
-	axios.get(baseUrl + "projects/v1/list")
+	axios.get(baseUrl + `projects/v1/list/${type}`)
 		.then((response) => {
 			context.loadStruct(response.data);
 		});
@@ -50,4 +50,21 @@ export function deleteProject(id) {
 			console.log(e);
 		});
 
+}
+
+
+export function addProjectType(project) {
+
+	axios.post(baseUrl + "projects/v1/addtype", project)
+		.then((response) => {
+			if (response.data.success) {
+				appAlerts._message(response.data.message);
+			} else {
+				appAlerts._error(response.data.message);
+			}
+		})
+		.catch((e) => {
+			// eslint-disable-next-line no-console
+			console.log(e);
+		});
 }
