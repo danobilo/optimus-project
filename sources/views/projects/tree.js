@@ -6,7 +6,7 @@ export class ProjectTreeView extends DHXView {
 					
 	render() {
 
-		let pId = null;
+		var pId = null;
 
 		// initialize dhtmlx menu
 		let menu = new dhtmlXMenuObject({
@@ -26,7 +26,17 @@ export class ProjectTreeView extends DHXView {
 		this.ui.enableDragAndDrop(true);
 		this.ui.enableContextMenu(true);		
 
-		this.ui.attachEvent("onClick", (id) => pId = id );
+		this.ui.attachEvent("onClick", (id) => {
+			pId = id;
+
+			this.app.callEvent("loadProjectForm", [id]);
+			this.app.callEvent("loadDocumentGrid", [id]);
+
+		});
+
+		this.attachEvent("UpdateProjectText", (id, text) => {
+			this.ui.setItemText(id, text);
+		});
 
 		this.addService("ProjectTree", {
             selected:() => pId
@@ -57,30 +67,13 @@ export class ProjectTreeView extends DHXView {
 			return false;
 		});		
 
-
 		this._load();		
 
 		this.attachEvent("ProjectMenuCheckboxClick", (context_id, state, name) => {
 
 			var value = state ? "0" : "1";
 			var ids = this._addSubItemsType(this.ui.getSelectedId(), context_id, value, name);
-
-			// console.log(ids);
-
 			this._addProjectType(ids, context_id, value);	
-
-
-			// var tree_id = this.ui.getSelectedId();
-
-			// this.ui.setUserData(tree_id, name, value);			
-			
-			// this._addProjectType(id, state, name);	
-
-			// let subItems = this.ui.getSubItems(this.ui.getSelectedId());
-
-			// if(subItems.length > 0){
-			// 	_addSubItemsType(subItems);
-			// }
 			
 		});
 
@@ -176,7 +169,7 @@ export class ProjectTreeView extends DHXView {
 	_loadMenu(menu){
 		let struct = [
 			{ id: "new", text: "New", items:[
-				{ id: "main", text: "Main Item"},
+				{ id: "main", text: "Root Item"},
 				{ id: "sub", text: "Sub Item"},
 			]},
 			{id: "type", text: "Type", items:[

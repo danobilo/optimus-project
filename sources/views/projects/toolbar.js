@@ -22,8 +22,8 @@ export class ProjectTopbarView extends DHXView{
 			]},
 			{id:"button_separator_7",type:"separator"},
 			{type:"buttonSelect",text:"New",options: [
-				{id:"main",type:"button",text:"Main Project",img:""},
-				{id:"sub",type:"button",text:"Sub Project",img:""},
+				{id:"main",type:"button",text:"Root Item",img:""},
+				{id:"sub",type:"button",text:"Sub Item",img:""},
 			]},
 			{id:"button_separator_8",type:"separator"},
 			{id:"delete",type:"button",text:"Delete"},

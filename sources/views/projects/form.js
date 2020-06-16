@@ -1,4 +1,5 @@
 import {DHXView} from "dhx-optimus";
+import { getProjectDetails, updateProject } from "../../api/projectsApi";
 
 export class ProjectFormView extends DHXView{
 	render(){
@@ -36,12 +37,27 @@ export class ProjectFormView extends DHXView{
 				]
 			}
 		]);
-		this._load();
+		// this._load();
 		// this.ui.centerForm();
-		// this.attachEvent("onContactSelect", e =>this._update(e.data.photo,e.data));
+		this.attachEvent("loadProjectForm", (pId) =>{
+			this._load(pId);
+		});
+
+		this.attachEvent("saveProjectForm", () => {
+
+			var id = this.app.getService("ProjectTree").selected();
+			let text = this.ui.getItemValue("title");
+			this.app.callEvent("UpdateProjectText", [id, text]);
+			this._sendForm(id);
+		});
 	}
-	_load(){
-		// this.ui.load("codebase/data/contacts.xml");
+	_load(pId){
+		this.ui.clear();
+		getProjectDetails(this.ui, pId);
+	}
+
+	_sendForm(id){
+		updateProject(this.ui, id);
 	}
 	
 }

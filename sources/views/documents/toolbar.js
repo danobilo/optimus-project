@@ -12,8 +12,9 @@ export class DocumentsTopbarView extends DHXView{
 
 	_load(){
 		let struct = [
-			{type:"buttonSelect",text:"New", options: [
+			{type:"buttonSelect",text:"Create", options: [
 				{id:"document",type:"button",text:"Document",img:""},
+				{id:"button_separator_5",type:"separator"},
 				{id:"chapter",type:"button",text:"Chapter",img:""},
 			]},
 			{id:"button_separator_6",type:"separator"},

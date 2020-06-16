@@ -7,17 +7,16 @@ const appAlerts = new DHXAlertView();
 const baseUrl = getBaseUrl();
 
 export function getProjects(context, type) {
+	context.loadStruct(baseUrl + `project/list/${type}`);
+}
 
-	axios.get(baseUrl + `projects/v1/list/${type}`)
-		.then((response) => {
-			context.loadStruct(response.data);
-		});
-
+export function getProjectDetails(context, id) {	
+	context.load(baseUrl + `project/details/${id}`);
 }
 
 export function createProjects(context, project) {
 
-	axios.post(baseUrl + "projects/v1/create", project)
+	axios.post(baseUrl + "project/create", project)
 		.then((response) => {
 			if (response.data.project) {
 				let item = response.data.project;
@@ -36,7 +35,7 @@ export function createProjects(context, project) {
 
 export function deleteProject(id) {
 
-	axios.get(baseUrl + `projects/v1/delete/${id}`)
+	axios.get(baseUrl + `project/delete/${id}`)
 		.then((response) => {
 			if (response.data.success) {
 				appAlerts._message(response.data.message);
@@ -55,12 +54,30 @@ export function deleteProject(id) {
 
 export function addProjectType(project) {
 
-	axios.post(baseUrl + "projects/v1/addtype", project)
+	axios.post(baseUrl + "project/addtype", project)
 		.then((response) => {
 			if (response.data.success) {
 				appAlerts._message(response.data.message);
 			} else {
 				appAlerts._error(response.data.message);
+			}
+		})
+		.catch((e) => {
+			// eslint-disable-next-line no-console
+			console.log(e);
+		});
+}
+
+export function updateProject(context, id){
+
+	var data = context.getFormData();
+	axios.post(baseUrl + `project/update/${id}`, data)
+		.then((response) => {
+			if (response.data.success) {
+				appAlerts._message(response.data.message);
+				// context._deleteItem(id);
+			} else {
+				appAlerts._error(response.data.error.message);
 			}
 		})
 		.catch((e) => {
