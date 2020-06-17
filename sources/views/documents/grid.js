@@ -3,7 +3,11 @@ import { createDocument, getDocuments, createChapter, deleteDocument } from "../
 import { deleteChapter } from "../../api/chapterApi";
 
 export class DocumentsGridView extends DHXView{
+
 	render(){
+
+		let sId = null;
+		let level = null;
 		this.ui = this.root.attachGrid();
 		this.ui.setImagePath("./codebase/terrace/imgs/");
 
@@ -21,13 +25,29 @@ export class DocumentsGridView extends DHXView{
 		this.ui.setInitWidthsP("10,*,15,15,12,14");
 		this.ui.init();
 			
-		this.ui.attachEvent("onRowSelect", e =>{
-			let data = {};
-			// this.ui.forEachCell(e, (cell,ind)=>data[this.ui.getColumnId(ind)] = cell.getValue());
-			// this.app.callEvent("onDocumentSelect",[{data:data}]);
+		this.ui.attachEvent("onRowSelect", (id) =>{
+
+			sId = id;
+			level = this.ui.getLevel(id);
+
+			if(level > 0){
+				this.app.callEvent("showChapterContent",[id]);
+			}
+			
+			this.app.callEvent("UpdateDetailsForm", [level]);
+
 		});
 		this.ui.attachEvent("onRowInserted",(r, index)=>{
 			// this.ui.setCellTextStyle(this.ui.getRowId(index), this.ui.getColIndexById("name"), "font-weight:bold;border-left-width:0px;");
+		});
+
+		this.addService("DocumentGrid", {
+			selected:() => sId,
+			rowLevel: ()=> level
+		});
+
+		this.attachEvent("UpdateDocumentText", (id, text) => {
+			this.ui.setItemText(id, text);
 		});
 
 		this.attachEvent("DocumentsToolbarClick", (id) => {

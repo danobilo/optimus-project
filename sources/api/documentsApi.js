@@ -71,3 +71,44 @@ export function deleteDocument(context, rowId, data) {
 		});
 
 }
+
+export function showDocumentDetails(context, id) {	
+	context.load(baseUrl + `document/details/${id}`);
+}
+
+export function updateDocument(context, id){
+
+	var data = context.getFormData();
+	axios.post(baseUrl + `document/update/${id}`, data)
+		.then((response) => {
+			if (response.data.success) {
+				appAlerts._message(response.data.message);
+				// context._deleteItem(id);
+			} else {
+				appAlerts._error(response.data.error.message);
+			}
+		})
+		.catch((e) => {
+			// eslint-disable-next-line no-console
+			console.log(e);
+		});
+}
+
+export function getDocumentContent(context, id) {
+
+	axios.get(baseUrl + `document/content/show/${id}`)
+		.then((response) => {
+			if (response.data.success) {
+				if (response.data.content != null) {
+					context.activeEditor.setContent(response.data.content);
+				}
+			} else {
+				appAlerts._error(response.data.error.message);
+			}
+		})
+		.catch((e) => {
+			// eslint-disable-next-line no-console
+			console.log(e);
+		});
+
+}

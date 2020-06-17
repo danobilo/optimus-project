@@ -1,5 +1,6 @@
 import {DHXView} from "dhx-optimus";
 import { ProjectFormView } from "./form";
+import { ScopeContentView } from "./scope";
 
 export class ProjectDetailsView extends DHXView{
 	render(){
@@ -18,5 +19,7 @@ export class ProjectDetailsView extends DHXView{
 		this.toolbar.loadStruct(struct);
 
 		this.show(ProjectFormView, this.ui.cells("a"));
+
+		this.show(ScopeContentView, this.ui.cells("b"));
 	}
 }
