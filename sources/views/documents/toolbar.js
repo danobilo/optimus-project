@@ -15,7 +15,7 @@ export class DocumentsTopbarView extends DHXView{
 			{type:"buttonSelect",text:"Create", options: [
 				{id:"document",type:"button",text:"Document",img:""},
 				{id:"button_separator_5",type:"separator"},
-				{id:"chapter",type:"button",text:"Chapter",img:""},
+				{id:"chapter",type:"button",text:"Topic",img:""},
 			]},
 			{id:"button_separator_6",type:"separator"},
             {id:"delete",type:"button",text:"Delete"},

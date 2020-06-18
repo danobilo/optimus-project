@@ -18,6 +18,6 @@ export class EventsTabbarView extends DHXView {
 		this.ui.addTab("tab_25", "Re-occurences");
 		var tab_25 = this.ui.cells("tab_25");
 		this.show(EventReoccurenceTopbarView, tab_25);
-		this.show(EventsGridView, tab_25);
+		// this.show(EventsGridView, tab_25);
 	}
 }

@@ -32,7 +32,6 @@ export class VideoTabbarView extends DHXView {
 
 		this.ui.addTab("tab_14", "Webvtt Files");
 		var tab_14 = this.ui.cells("tab_14");
-		// this.show(EventsView, tab_14);
 
 		this.ui.addTab("tab_15", "Moodle media");
 		var tab_15 = this.ui.cells("tab_15");

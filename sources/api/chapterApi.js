@@ -1,10 +1,20 @@
 import axios from "axios";
 import getBaseUrl from "./baseUrl";
 import {DHXAlertView} from "../helpers/alerts";
+import { addGridRow } from "../helpers/utils";
 
 const appAlerts = new DHXAlertView();
 
 const baseUrl = getBaseUrl();
+
+export function createChapter(context, data, pId) {
+
+	const requestUrl = baseUrl + "chapter/create";
+	const responseUrl = baseUrl + `document/list/${pId}`;
+
+	addGridRow(context, data, requestUrl, responseUrl, true);
+	
+}
 
 export function deleteChapter(context, id) {
 
@@ -82,5 +92,20 @@ export function updateChapter(context, id){
 		});
 }
 
+export function editChapterCell(data) {
 
+	axios.post(baseUrl + "chapter/editcell", data)
+		.then((response) => {
+			if (response.data.success) {
+				appAlerts._message(response.data.message);
+			} else {
+				appAlerts._error(response.data.error.message);
+			}
+		})
+		.catch((e) => {
+			// eslint-disable-next-line no-console
+			console.log(e);
+		});
+
+}
 

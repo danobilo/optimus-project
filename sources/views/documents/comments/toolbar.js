@@ -6,7 +6,6 @@ export class CommentsTopbarView extends DHXView {
 			iconset: "awesome",
 		});
         // this.ui.setIconSize(32);
-		this.ui.attachEvent("onClick", (id) => this.callEvent("EventsToolbarClick", [id]));
 		this._load();
 	}
 

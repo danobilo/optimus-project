@@ -7,7 +7,7 @@ export class VideoMainFormView extends DHXView {
 		});
 		this.toolbar.addButton("save", 1, "Save", "", "");
     // this.ui.setIconSize(32);
-    // this.ui.attachEvent("onClick", (id) => this.callEvent("EventsToolbarClick", [id]));
+
 
 		this.form = this.root.attachForm([
 			{

@@ -1,5 +1,6 @@
 import { DHXView } from "dhx-optimus";
 import { getChapterContent, updateContent } from "../../api/chapterApi";
+import { getDocumentContent } from "../../api/documentsApi";
 var doc_content = require("templates/document.html");
 
 export class DocumentContentView extends DHXView{
@@ -37,8 +38,8 @@ export class DocumentContentView extends DHXView{
 			this._update(content);
 		});
 
-		this.attachEvent("showChapterContent", (id) => {
-			this._showContent(id);
+		this.attachEvent("showDocumentContent", (id, level) => {
+			this._showContent(id, level);
 		});
 
 
@@ -49,8 +50,14 @@ export class DocumentContentView extends DHXView{
 		updateContent({notes:content}, cId);
 	}
 
-	_showContent(id){
+	_showContent(id, level){
 		tinymce.activeEditor.setContent("");
-		getChapterContent(tinymce, id);
+
+		if (level > 0) {
+			getChapterContent(tinymce, id);
+		} else {
+			getDocumentContent(tinymce, id.substring(4));
+		}
+			
 	}
 }

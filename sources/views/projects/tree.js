@@ -39,8 +39,8 @@ export class ProjectTreeView extends DHXView {
 		});
 
 		this.addService("ProjectTree", {
-            selected:() => pId
-        });
+			selected:() => pId
+		});
 
 		this.ui.attachEvent("onContextMenu", function (id, x, y, ev) {
 

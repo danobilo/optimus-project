@@ -6,7 +6,7 @@ export class EventsTopbarView extends DHXView {
 			iconset: "awesome",
 		});
         // this.ui.setIconSize(32);
-		this.ui.attachEvent("onClick", (id) => this.callEvent("EventsToolbarClick", [id]));
+		this.ui.attachEvent("onClick", (id) => this.callEvent("PlanningToolbarClick", [id]));
 		this._load();
 	}
 
