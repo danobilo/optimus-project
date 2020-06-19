@@ -1,7 +1,7 @@
 import { DHXView } from "dhx-optimus";
 import { EventFormView } from "./form";
-import { EventsGridView } from "./grid";
-import { EventReoccurenceTopbarView } from "./reocurrence_toolbar";
+import { EventReoccurencesGridView } from "./reoccurences/grid";
+import { EventReoccurenceTopbarView } from "./reoccurences/toolbar";
 
 export class EventsTabbarView extends DHXView {
 	render() {
@@ -18,6 +18,6 @@ export class EventsTabbarView extends DHXView {
 		this.ui.addTab("tab_25", "Re-occurences");
 		var tab_25 = this.ui.cells("tab_25");
 		this.show(EventReoccurenceTopbarView, tab_25);
-		// this.show(EventsGridView, tab_25);
+		this.show(EventReoccurencesGridView, tab_25);
 	}
 }

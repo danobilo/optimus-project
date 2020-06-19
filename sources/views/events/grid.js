@@ -3,6 +3,8 @@ import { createEvent, getEvents, deleteEvent } from "../../api/eventsApi";
 
 export class EventsGridView extends DHXView{
 	render(){
+
+		let sId = null;
 		this.ui = this.root.attachGrid();
 		this.ui.setIconsPath("./codebase/imgs/");
 
@@ -28,6 +30,16 @@ export class EventsGridView extends DHXView{
 			{value: "4", text: "Implemented"}
 		]);
 
+		this.ui.attachEvent("onSelectStateChanged", (id) =>{
+
+			sId = id;
+			this.app.callEvent("loadEventForm", [id]);		
+			this.app.callEvent("loadEventReoccurenceGrid", [id]);	
+		});
+
+		this.addService("EventGrid", {
+			selected:() => sId,
+		});
 
 		this.attachEvent("PlanningToolbarClick", (id) => {
 
@@ -50,6 +62,8 @@ export class EventsGridView extends DHXView{
 		this.attachEvent("deleteEvent", (rowId)  => {		
 			this._deleteEvent(rowId);
 		});
+
+		this.attachEvent("UpdateEventGridAssignedTo", (text) => this.ui.cells(this.ui.getSelectedRowId(),3).setValue(text));
 	}
 	
 	_load(rowId, level) {
