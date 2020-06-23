@@ -5,7 +5,7 @@ export class AudioClipGridView extends DHXView {
 		let grid_16 = (this.ui = this.root.attachGrid());
 		grid_16.setIconsPath("./codebase/imgs/");
 
-		grid_16.setHeader(["#", "Begin", "End", "Updated", "Status"]);
+		grid_16.setHeader(["Sort", "Begin", "End", "Updated", "Status"]);
 		grid_16.setColTypes("ro,ro,ro,ro,ro");
 
 		grid_16.setColSorting("str,str,str,str,str");

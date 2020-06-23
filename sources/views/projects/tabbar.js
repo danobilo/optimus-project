@@ -2,6 +2,7 @@ import { DHXView } from "dhx-optimus";
 import { ProjectDetailsView } from "./details";
 import { DocumentsView } from "../documents/layout";
 import { VideoTabbarView } from "../video/tabbar";
+import { MediaView } from "../media/layout";
 
 export class TabbarView extends DHXView {
 	render() {
@@ -19,8 +20,13 @@ export class TabbarView extends DHXView {
 		let tab_9 = this.ui.cells("tab_9");
 		this.show(DocumentsView, tab_9);
 
-		this.ui.addTab("tab_18", "Content");
-		let tab_18 = this.ui.cells("tab_18");
-		this.show(VideoTabbarView, tab_18);
+		// this.ui.addTab("tab_18", "Content");
+		// let tab_18 = this.ui.cells("tab_18");
+		// this.show(VideoTabbarView, tab_18);
+
+		this.ui.addTab("tab_26","Media");
+		let tab_26 = this.ui.cells("tab_26");
+		this.show(MediaView, tab_26);
+		
 	}
 }
