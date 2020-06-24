@@ -46,6 +46,7 @@ export class DocumentsGridView extends DHXView{
 			this.app.callEvent("UpdateDetailsForm", [level]);
 
 			this.app.callEvent("loadEventsGrid", [id, level]);
+			this.app.callEvent("loadFilesGrid", [id, level]);
 		});
 
 		this.addService("DocumentGrid", {

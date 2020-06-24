@@ -1,7 +1,6 @@
 import { DHXView } from "dhx-optimus";
 import { ProjectDetailsView } from "./details";
 import { DocumentsView } from "../documents/layout";
-import { VideoTabbarView } from "../video/tabbar";
 import { MediaView } from "../media/layout";
 
 export class TabbarView extends DHXView {

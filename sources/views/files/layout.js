@@ -12,5 +12,7 @@ export class FilesView extends DHXView {
 		this.show(FilesGridView, this.ui.cells("a"));
 
 		this.addSlot(this.ui.cells("b"),"fileViewer");
+
+		this.attachEvent("showDocumentFile", (path) => this.ui.cells("b").attachURL(path));
 	}
 }

@@ -1,4 +1,9 @@
 import {DHXView} from "dhx-optimus";
+import getBaseUrl, { getFileUrl } from "../../api/baseUrl";
+import { getFiles, deleteFile } from "../../api/filesApi";
+
+const baseUrl = getBaseUrl();
+const fileUrl = getFileUrl();
 
 export class MediaGridView extends DHXView{
 
@@ -18,6 +23,21 @@ export class MediaGridView extends DHXView{
 		this.ui.setInitWidthsP("20,*,12,12,14");
 		// this.ui.enableContextMenu(menu);		
 		this.ui.init();
+        
+		this.attachEvent("MediaToolbarClick", (id) => {
+
+            // alert(id);
+
+			switch (id) {                    
+				case "delete":
+					this._delete();			
+					break;
+                    
+				default:
+					this._upload(id);		
+					break;
+			}
+		});
 
 		// this.ui.attachEvent("onEditCell", (stage, id, index, new_value) => this.app.callEvent("DocumentGridEditCell",[stage, id, index, new_value]));
 
@@ -76,4 +96,59 @@ export class MediaGridView extends DHXView{
 		// 	this._deleteDocument(rowId, level);
 		// });
 	}
+    
+	_upload(id){
+
+		let pId = this.app.getService("ProjectTree").selected();
+		let isProject = pId > 0;
+
+		if (!isProject) {
+		
+			dhtmlx.alert({
+				type: "alert-error",
+				text: "First select a project.",
+				title: "Error!"
+			});
+			return;
+		}	
+        
+		let app = this.app;
+
+		var uploadBoxformData = [
+            // {type: "hidden", label: "ID", name: "id", value: ((level > 0) ? rowId : doc_id)},
+            // {type: "hidden", label: "type", name: "type", value: ((level > 0) ? "chapter" : "document")},
+			{	
+				type: "fieldset",
+				label: "Uploader",
+				list: [{
+					type: "upload",
+					name: "file",
+					inputWidth: 330,
+					url: baseUrl + `media/upload/${pId}/${id}`,
+					swfPath: "dhtmlx/codebase/ext/uploader.swf"
+				}]			
+			}
+		];
+
+
+		var picUploadMainWindow = new dhtmlXWindows();
+		var picUploadWindow = picUploadMainWindow.createWindow("uploadpic_win", 0, 0, 420, 210);
+		picUploadWindow.center();
+		picUploadWindow.setText("Upload file(s)");
+
+            //add form
+		var uploadpicForm = picUploadWindow.attachForm(uploadBoxformData);
+
+
+		uploadpicForm.attachEvent("onUploadComplete", function () {
+			dhtmlx.message("file uploaded");
+
+			// app.callEvent("loadFilesGrid", [rowId, level]);
+			picUploadMainWindow.window("uploadpic_win").hide();
+		});
+
+		uploadpicForm.attachEvent("onUploadFail", function (realName) {
+			dhtmlx.alert({title: "Error", text: "The was an error uploading " + realName});
+		});
+	}	
 }

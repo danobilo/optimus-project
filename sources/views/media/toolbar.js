@@ -5,7 +5,8 @@ export class MediaTopbarView extends DHXView{
 		this.ui = this.root.attachToolbar({
 			iconset: "awesome",
 		});
-		// this.ui.setIconSize(32);
+        // this.ui.setIconSize(32);
+		this.ui.attachEvent("onClick", (id) => this.callEvent("MediaToolbarClick", [id]));
 		this._load();
 	}
 
