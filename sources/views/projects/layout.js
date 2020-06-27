@@ -2,7 +2,6 @@ import { DHXView } from "dhx-optimus";
 import { ProjectTopbarView } from "./toolbar";
 import { ProjectTreeView } from "./tree";
 import { TabbarView } from "./tabbar";
-import { ProjectsFormStruct } from "./projects_form";
 
 
 export class ProjectsView extends DHXView {

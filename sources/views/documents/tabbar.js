@@ -6,6 +6,7 @@ import { DocumentHistoryView } from "./history/layout";
 import { CommentsView } from "./comments/layout";
 import { DocumentContentView } from "./content";
 import { ChapterFormView } from "./details/chapter_form";
+import { DocumentMediaView } from "./media/layout";
 
 export class DocumentsTabbarView extends DHXView {
 	render() {
@@ -49,6 +50,11 @@ export class DocumentsTabbarView extends DHXView {
 
 		var tab_23 = this.ui.cells("tab_23");
 		this.show(CommentsView, tab_23);
+
+		this.ui.addTab("tab_24", "Media");
+
+		var tab_24 = this.ui.cells("tab_24");
+		this.show(DocumentMediaView, tab_24);
 
 		this.attachEvent("UpdateDetailsForm", (level) => {
 

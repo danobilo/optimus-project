@@ -31,6 +31,7 @@ export class ProjectTreeView extends DHXView {
 
 			this.app.callEvent("loadProjectForm", [id]);
 			this.app.callEvent("loadDocumentGrid", [id]);
+			this.app.callEvent("loadMediaGrid", [id]);
 
 		});
 

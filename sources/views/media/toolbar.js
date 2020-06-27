@@ -16,8 +16,12 @@ export class MediaTopbarView extends DHXView{
                 {id:"video",type:"button",text:"Video",img:""},
                 {id:"button_separator_7",type:"separator"},
 				{id:"audio",type:"button",text:"Audio",img:""},
-			]},
-			{id:"button_separator_8",type:"separator"},
+            ]},
+            {id:"button_separator_8",type:"separator"},
+            {id:"split",type:"button",text:"Split"},
+            {id:"button_separator_6",type:"separator"},
+			{id:"translate",type:"button",text:"Translate to text"},
+			{id:"button_separator_9",type:"separator"},
 			{id:"delete",type:"button",text:"Delete"},
 		];
 		this.ui.loadStruct(struct);
