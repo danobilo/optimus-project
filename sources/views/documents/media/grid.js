@@ -1,6 +1,7 @@
 import {DHXView} from "dhx-optimus";
 import getBaseUrl from "../../../api/baseUrl";
 import { getMedia } from "../../../api/mediaApi";
+import { addDocumentMedia, getDocumentMedia } from "../../../api/documentsApi";
 
 const baseUrl = getBaseUrl();
 
@@ -43,21 +44,25 @@ export class DocumentMediaGridView extends DHXView{
 			}
 		});
 
+		this.attachEvent("AddDocumentMediaToolbarClick", (ids) => {
+			this._sendMedia(ids);
+		});
+
 		this.attachEvent("loadDocumentMediaGrid", (id, level) => {
 			this._load(id, level);
 		});
 
 		this.attachEvent("deleteDocumentMedia", (rowId)  => {		
-			this._deleteFile(rowId);
+			// this._deleteFile(rowId);
 		});
 	}
 	
 	_load(docId, level) {
 
 		if (level == 0) {
-			// getDocumentMedia(this.ui, "document", docId.substring(4));
+			getDocumentMedia(this.ui, "document", docId.substring(4));
 		} else {
-			// getDocumentMedia(this.ui, "chapter", docId);
+			getDocumentMedia(this.ui, "chapter", docId);
 		}
 	}
 
@@ -145,22 +150,28 @@ export class DocumentMediaGridView extends DHXView{
 
 	}
 
-	_deleteFile(id){
-		deleteFile(this.ui, id);
-	}	
+	// _deleteFile(id){
+	// 	deleteFile(this.ui, id);
+	// }	
 
 	_addMedia(){
+		let app = this.app;
 		this.window = new dhtmlXWindows();	
 		let window_1 = this.window.createWindow("add_root_win", 0, 0, 900, 600);
 		window_1.center();
-		window_1.setText("Add New Category");
+		window_1.setText("Add Document Media");
 
 		let layout = window_1.attachLayout("1C");
 		layout.cells("a").hideHeader();
 
 		let toolbar = layout.cells("a").attachToolbar();
 		toolbar.addButton("save", 1, "Save", "", "");
-		// toolbar.attachEvent("onClick", (id) => this.app.callEvent("EventFormToolbarClick", [id]));
+		toolbar.attachEvent("onClick", (id) => {
+
+			var ids = grid.getSelectedRowId();
+			app.callEvent("AddDocumentMediaToolbarClick", [ids]);
+			this.window.unload();
+		});
 
 		let grid = layout.cells("a").attachGrid();
 		grid.setImagePath("./codebase/terrace/imgs/");
@@ -181,6 +192,22 @@ export class DocumentMediaGridView extends DHXView{
 
 		this._load_grid(grid);
 
+
+	}
+
+	_sendMedia(ids){
+
+		let rowId = this.app.getService("DocumentGrid").selected();
+		let level = this.app.getService("DocumentGrid").rowLevel();
+		let data = {ids: ids, n_value: 1, document_id: rowId.substring(4)};
+		if (level == 0) {
+			data.document_id = rowId.substring(4);
+			addDocumentMedia(this.ui, "document", data);
+		} else {
+			data.document_id = rowId;
+			addDocumentMedia(this.ui, "chapter", data);
+		}
+		
 
 	}
 

@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import axios from "axios";
 import getBaseUrl from "./baseUrl";
 import { DHXAlertView } from "../helpers/alerts";
@@ -96,4 +97,27 @@ export function editDocumentCell(data) {
 			console.log(e);
 		});
 
+}
+
+export function addDocumentMedia(context, type, data) {
+	axios.post(baseUrl + `${type}/media`, data)
+		.then((response) => {
+			if (response.data.success) {
+				appAlerts._message(response.data.message);
+				getDocumentMedia(context, type, data.document_id);
+			} else {
+				appAlerts._error("An error occured, please contact system admin");
+			}
+		})
+		.catch((e) => {
+			// eslint-disable-next-line no-console
+			console.log(e);
+		});
+}
+
+export function getDocumentMedia(context, type, id){
+
+	context.clearAndLoad(baseUrl + `${type}/media/${id}`, () => {
+		context.groupBy(5);
+	});
 }
