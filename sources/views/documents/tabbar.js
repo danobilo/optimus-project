@@ -46,10 +46,10 @@ export class DocumentsTabbarView extends DHXView {
 		var tab_22 = this.ui.cells("tab_22");
 		this.show(DocumentHistoryView, tab_22);
 
-		this.ui.addTab("tab_23", "Comments");
+		// this.ui.addTab("tab_23", "Comments");
 
-		var tab_23 = this.ui.cells("tab_23");
-		this.show(CommentsView, tab_23);
+		// var tab_23 = this.ui.cells("tab_23");
+		// this.show(CommentsView, tab_23);
 
 		this.ui.addTab("tab_24", "Media");
 

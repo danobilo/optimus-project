@@ -4,10 +4,13 @@ import {TopbarView} 	from "views/topbar.js";
 import {ProjectsView} 	from "./projects/layout";
 import { UsersView } from "./users";
 import { RolesView } from "./roles";
+import { logout } from "../api/auth";
+
 
 export class TopView extends DHXView{
 	render(){
 		let top = this.root.attachLayout("1C");
+		top.cells("a").hideHeader();
 
 		this.show(TopbarView, top);
 		this.addSlot("main",top.cells("a"));
@@ -19,9 +22,10 @@ export class TopView extends DHXView{
 				this.show(UsersView, "main");
 			else if (id === "roles")
 				this.show(RolesView, "main");
+			else if (id == "logout")
+				logout();
 		});
 
 		this.show(ProjectsView, "main");
-
 	}
 }

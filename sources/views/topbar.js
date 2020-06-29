@@ -32,7 +32,7 @@ export class TopbarView extends DHXView{
 			{id:"button_separator_46",type:"separator"},
 			{id:"button_normal_65",type:"button",text:"Profile"},
 			{id:"button_separator_47",type:"separator"},
-			{id:"button_normal_66",type:"button",text:"Logout"},
+			{id:"logout",type:"button",text:"Logout"},
 		];
 		this.ui.loadStruct(struct);
 	}
