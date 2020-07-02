@@ -14,8 +14,8 @@ export class DocumentMediaTopbarView extends DHXView {
 		let struct = [
 			{ id: "add", type: "button", text: "Add New" },
             { id: "button_separator_7", type: "separator" },
-            { id: "upload", type: "button", text: "Upload New" },
-            { id: "button_separator_8", type: "separator" },
+            // { id: "upload", type: "button", text: "Upload New" },
+            // { id: "button_separator_8", type: "separator" },
             { id: "delete", type: "button", text: "Delete" },           
 		];
 		this.ui.loadStruct(struct);

@@ -1,4 +1,5 @@
 import {DHXView} from "dhx-optimus";
+import { getUser } from "../api/userApi";
 
 export class TopbarView extends DHXView{
 	render(){
@@ -28,12 +29,14 @@ export class TopbarView extends DHXView{
 			]},
 			{id:"button_separator_45",type:"separator"},
 			{type:"spacer"},
-			{id:"button_text_2",type:"text",text:"<span class='topbar_title'>Username</span>"},
+			{id:"button_text_2",type:"text",text:""},
 			{id:"button_separator_46",type:"separator"},
 			{id:"button_normal_65",type:"button",text:"Profile"},
 			{id:"button_separator_47",type:"separator"},
 			{id:"logout",type:"button",text:"Logout"},
 		];
-		this.ui.loadStruct(struct);
+		this.ui.loadStruct(struct, () => {
+			getUser(this.ui);			
+		});
 	}
 }

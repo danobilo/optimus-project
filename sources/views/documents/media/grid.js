@@ -5,7 +5,7 @@ import { addDocumentMedia, getDocumentMedia } from "../../../api/documentsApi";
 
 const baseUrl = getBaseUrl();
 
-export class DocumentMediaGridView extends DHXView{
+export class DocumentMediaGridView extends DHXView {
 	render(){
 
 		this.ui = this.root.attachGrid();
@@ -31,6 +31,18 @@ export class DocumentMediaGridView extends DHXView{
 			switch (id) {
 
 				case "add":
+
+					let rowId = this.app.getService("DocumentGrid").selected();
+
+					if (rowId === null) {
+						dhtmlx.alert({
+							type: "alert-error",
+							text: "First select an document.",
+							title: "Error!"
+						});
+						return;
+					}
+
 					this._addMedia();
 					break;
 
@@ -165,12 +177,18 @@ export class DocumentMediaGridView extends DHXView{
 		layout.cells("a").hideHeader();
 
 		let toolbar = layout.cells("a").attachToolbar();
-		toolbar.addButton("save", 1, "Save", "", "");
+		toolbar.addButton("save", 1, "Add Selected", "", "");
+		toolbar.addSeparator("sep_01", 2);
+		toolbar.addButton("upload", 3, "Upload New", "", "");
 		toolbar.attachEvent("onClick", (id) => {
 
-			var ids = grid.getSelectedRowId();
-			app.callEvent("AddDocumentMediaToolbarClick", [ids]);
-			this.window.unload();
+			if(id == "save") {
+
+				var ids = grid.getSelectedRowId();
+				app.callEvent("AddDocumentMediaToolbarClick", [ids]);
+				this.window.unload();
+			}
+			
 		});
 
 		let grid = layout.cells("a").attachGrid();

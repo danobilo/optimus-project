@@ -36,7 +36,7 @@ export class LoginView extends DHXView{
 
 	_sendForm(data) {
 
-		signin(this.ui, data);
+		signin(this.app, data);
 		// updateDocument(this.ui, id.substring(4));
 	}
 	

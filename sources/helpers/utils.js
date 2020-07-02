@@ -8,7 +8,7 @@ export function addGridRow(context, data, requestUrl, responseUrl, isTree = fals
 		.then((response) => {
 			if (response.data.success) {
 				appAlerts._message(response.data.message);
-				context.updateFromXML(responseUrl, true, true, function () {
+				context.clearAndLoad(responseUrl, function () {
 					context.selectRowById(response.data.id);
                     
 					if(isTree){

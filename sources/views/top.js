@@ -2,8 +2,8 @@ import {DHXView} from "dhx-optimus";
 
 import {TopbarView} 	from "views/topbar.js";
 import {ProjectsView} 	from "./projects/layout";
-import { UsersView } from "./users";
-import { RolesView } from "./roles";
+import { UsersView } from "./users/layout";
+import { RolesView } from "./roles/layout";
 import { logout } from "../api/auth";
 
 

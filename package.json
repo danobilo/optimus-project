@@ -1,7 +1,7 @@
 {
-  "name": "optimus-start",
+  "name": "optimus-project",
   "version": "1.0.0",
-  "description": "Starter package for DHTMLX Optimus",
+  "description": "Projects Program",
   "deployPath": "dhtmlx.com:/dummy/",
   "localURL": "http://127.0.0.1/dhtmlx/demos/crm/",
   "main": "app.js",
@@ -15,7 +15,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/DHTMLX/optimus-start.git"
+    "url": "git+https://github.com/danobilo/optimus-project.git"
   },
   "keywords": [
     "dhtmlx",
@@ -23,12 +23,11 @@
     "ui",
     "framework"
   ],
-  "author": "Stanislaw Wolski",
-  "license": "MIT",
+  "author": "Daniel Mkony",
   "bugs": {
-    "url": "https://github.com/DHTMLX/optimus-start/issues"
+    "url": "https://github.com/danobilo/optimus-project/issues"
   },
-  "homepage": "https://github.com/DHTMLX/optimus-start#readme",
+  "homepage": "https://github.com/danobilo/optimus-project#readme",
   "devDependencies": {
     "babel-core": "^6.24.0",
     "babel-loader": "^6.4.0",
