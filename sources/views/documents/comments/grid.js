@@ -3,7 +3,8 @@ import { DHXView } from "dhx-optimus";
 export class CommentsGridView extends DHXView {
 	render() {
 		this.ui = this.root.attachGrid();
-		this.ui.setIconsPath("./codebase/imgs/");
+		this.ui.setSkin('dhx_web');
+		this.ui.setImagesPath('./codebase/web/imgs/');
 
 		this.ui.setHeader(["ID", "Date", "Author", "Comment"]);
 		this.ui.setColTypes("ro,ro,ro,ro");

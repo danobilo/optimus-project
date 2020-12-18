@@ -8,7 +8,8 @@ export class AudioClipAudioView extends DHXView{
         let level = null;
         
         let grid_16 = (this.ui = this.root.attachGrid());
-		grid_16.setIconsPath("./codebase/imgs/");
+		grid_16.setSkin('dhx_web');
+		grid_16.setImagesPath('./codebase/web/imgs/');
 
 		grid_16.setHeader(["Sort", "Begin", "End", "Updated", "Status"]);
 		grid_16.setColTypes("ro,ro,ro,ro,ro");

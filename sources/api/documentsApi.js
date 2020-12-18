@@ -115,7 +115,7 @@ export function addDocumentMedia(context, type, data) {
 		});
 }
 
-export function getDocumentMedia(context, type, id){
+export function getDocumentMedia(context, type, id) {
 
 	context.clearAndLoad(baseUrl + `${type}/media/${id}`, () => {
 		context.groupBy(5);

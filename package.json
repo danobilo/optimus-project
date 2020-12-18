@@ -60,6 +60,7 @@
   },
   "dependencies": {
     "axios": "^0.19.2",
+    "dhtmlx-scheduler": "^5.3.9",
     "jwt-decode": "^2.2.0"
   }
 }

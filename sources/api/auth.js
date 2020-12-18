@@ -7,8 +7,8 @@ const baseUrl = getBaseUrl();
 
 export default {
 
-	signup: function (context, user) {
-		axios.post(baseUrl + "auth/signup", user)
+    signup: function (context, user) {
+        axios.post(baseUrl + "auth/signup", user)
             .then(response => {
                 console.log(response.data);
                 if (response.data.user) {
@@ -27,12 +27,12 @@ export default {
             });
     },
     signin: function (context, user) {
-        axios.post(baseUrl +"auth/login", user)
+        axios.post(baseUrl + "auth/login", user)
             .then(response => {
                 if (response.data.token) {
                     localStorage.setItem("token", response.data.token);
                     context.$router.push("/account");
-                                // EventBus.$emit('login', 'logged in')
+                    // EventBus.$emit('login', 'logged in')
                 } else {
                     context.status = "error";
                     context.errors = response.data;
@@ -42,19 +42,19 @@ export default {
                 context.status = "error";
                 context.errors.push(e);
             });
-	}
+    }
 };
 
-export function signin (context, user) {
-	axios.post(baseUrl + "auth/login", user)
+export function signin(context, user) {
+    axios.post(baseUrl + "auth/login", user)
         .then(response => {
             // console.log(response.data);
-	        if (response.data.access_token) {
+            if (response.data.access_token) {
                 // console.log('success');
                 localStorage.setItem("token", response.data.access_token);
                 window.location.reload();
                 // context.$router.push("/account");
-                        // EventBus.$emit('login', 'logged in')
+                // EventBus.$emit('login', 'logged in')
             } else {
                 // context.status = "error";
                 // context.errors = response.data;
@@ -66,54 +66,56 @@ export function signin (context, user) {
         });
 }
 
-export function auth (to, from, next) {
-	console.log(loggedIn());
-	if (!loggedIn()) {
-		next({
-			path: "/login"
-		});
-	} else {
-		next();
-	}
+export function auth(to, from, next) {
+    console.log(loggedIn());
+    if (!loggedIn()) {
+        next({
+            path: "/login"
+        });
+    } else {
+        next();
+    }
 }
 
-export function logout () {
+export function logout() {
 
     var config = {
         headers: getAuthHeader()
-    }
+    };
     localStorage.removeItem("token");
     axios.get(baseUrl + 'auth/logout', config);
     window.location.reload();
     // EventBus.$emit('logout', 'logged out')
-    
+
 
 }
 
-export function loggedIn () {
-	let token = getToken();
-	return !!token && !tokenNotExpired(token);
+export function loggedIn() {
+    let token = getToken();
+    return !!token && !tokenNotExpired(token);
 }
 
-export function getToken () {
-	return localStorage.getItem("token");
+export function getToken() {
+    return localStorage.getItem("token");
 }
 
-export function tokenExpirationDate (encodedToken) {
-	let token = decode(encodedToken);
-	if (!token.exp) { return null; }
-	const date = new Date(0);
-	date.setUTCSeconds(token.exp);
-	return date;
+export function tokenExpirationDate(encodedToken) {
+    let token = decode(encodedToken);
+    if (!token.exp) {
+        return null;
+    }
+    const date = new Date(0);
+    date.setUTCSeconds(token.exp);
+    return date;
 }
 
-export function tokenNotExpired (token) {
-	let expirationDate = tokenExpirationDate(token);
-	return expirationDate < new Date();
+export function tokenNotExpired(token) {
+    let expirationDate = tokenExpirationDate(token);
+    return expirationDate < new Date();
 }
 
-export function getAuthHeader () {
-	return {
-		"Authorization": "Bearer " + localStorage.getItem("token")
-	};
+export function getAuthHeader() {
+    return {
+        "Authorization": "Bearer " + localStorage.getItem("token")
+    };
 }

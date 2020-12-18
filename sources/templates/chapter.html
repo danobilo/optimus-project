@@ -1,1 +1,25 @@
+<script type="text/javascript">
+    tinymce.init({
+        selector:"textarea#chapter",
+        height: 706,
+        plugins: [
+            "save advlist autolink lists link image charmap print preview anchor",
+            "searchreplace visualblocks code fullscreen",
+            "insertdatetime media table contextmenu paste emoticons textcolor colorpicker textpattern"
+        ],
+        toolbar1: "save | insertfile undo redo | styleselect | fontselect |  bold italic underline strikethrough",
+        toolbar2: "alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media | forecolor backcolor emoticons",
+        image_advtab: true,
+        save_enablewhendirty: true,
+        paste_data_images: true,
+        media_live_embeds: true,
+
+        save_onsavecallback: function () {
+            var content = tinymce.activeEditor.getContent();
+            // app.callEvent("UpdateChapterContent", [content]);
+        }
+
+    });
+</script>
+
 <textarea id="chapter">{{content}}</textarea>

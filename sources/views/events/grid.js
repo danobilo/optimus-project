@@ -6,7 +6,8 @@ export class EventsGridView extends DHXView{
 
 		let sId = null;
 		this.ui = this.root.attachGrid();
-		this.ui.setIconsPath("./codebase/imgs/");
+		this.ui.setSkin('dhx_web');
+		this.ui.setImagesPath('./codebase/web/imgs/');
 
 		this.ui.setHeader(["ID","Description","Owner","Assigned To","Begin Date","End Date","Visible","Status"]);
 		this.ui.setColumnIds("id,details,creator,assigned,start_date,end_date,is_visible,status");

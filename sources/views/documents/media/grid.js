@@ -9,8 +9,8 @@ export class DocumentMediaGridView extends DHXView {
 	render(){
 
 		this.ui = this.root.attachGrid();
-		this.ui.setImagePath("./codebase/terrace/imgs/");
-
+		this.ui.setSkin('dhx_web');
+		this.ui.setImagesPath('./codebase/web/imgs/');
 		this.ui.setHeader(["Title","Link (Copy this to embed in moodle)","Start Time","End Time","Date","Type"]);
 		this.ui.setColTypes("tree,ro,ro,ro,ro,ro");
 		this.ui.enableCellIds(true);
