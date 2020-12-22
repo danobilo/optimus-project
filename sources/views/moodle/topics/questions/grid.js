@@ -20,7 +20,7 @@ export class MoodleTopicQuestionsGridView extends DHXView {
         grid.setImagesPath('./codebase/web/imgs/');
 
         grid.setHeader(["ID", "Title", "Content", "Type"]);
-        grid.setColTypes("ro,ed,ed,combo");
+        grid.setColTypes("ro,ed,ed,ro");
         grid.setColSorting('int,str,str,str');
         grid.enableCellIds(true);
         grid.setColumnIds('id,title,text,type');

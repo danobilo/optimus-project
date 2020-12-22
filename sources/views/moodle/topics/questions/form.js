@@ -21,7 +21,16 @@ export class MoodleTopicsQuestionsFormView extends DHXView {
             {type: "settings", position: "label-left", labelWidth: 110, inputWidth: 220, offsetTop: 10, offsetLeft: 10},
             {type: "input", name: "title", label: "Title", required: true},
             {type: "input", name: "text", label: "Contents", required: true, rows: 3},
-            {type: "combo", name: "type", label: "Type"},
+            {
+                type: "combo", name: "type", label: "Type", options: [
+                    {value: "10", text: "Essay"},
+                    {value: "3", text: "Multichoice"},
+                    {value: "5", text: "Matching"},
+                    {value: "8", text: "Numerical"},
+                    {value: "1", text: "Short Answer"},
+                    {value: "2", text: "True/False"}
+                ]
+            },
             {type: "checkbox", name: "qoption", label: "Multiple_answer", hidden: "true"}
         ]);
 
