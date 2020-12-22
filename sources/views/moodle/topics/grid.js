@@ -10,6 +10,7 @@ export class MoodleTopicsGridView extends DHXView {
 
         let sId = null;
         let content = null;
+        let lessonId = null;
 
         this.ui = this.root.attachGrid();
         this.ui.setSkin('dhx_web');
@@ -50,6 +51,7 @@ export class MoodleTopicsGridView extends DHXView {
             let isLesson = this.ui.getLevel(id) == 1 && this.ui.cells(id, 2).getValue() == 'lesson';
 
             if (isLesson) {
+                lessonId = null;
                 this.app.callEvent("TopicsSelect", ['lesson']);
             } else {
 
@@ -58,12 +60,11 @@ export class MoodleTopicsGridView extends DHXView {
 
                 if (modname === 'lesson') {
 
-                    let lesson_id = this.ui.cells(this.ui.getParentId(id), 3).getValue();
+                    lessonId = this.ui.cells(this.ui.getParentId(id), 3).getValue();
 
+                    this.app.callEvent("loadTopicQuestionsGrid", [id]);
 
-                    // grid_page_questions.clearAndLoad("Controller/php/data_questions.php?action=4&page_id=" + id.split("_")[1]);
-
-                    axios.get(baseUrl + 'course/module/' + id.split("_")[1] + '/server/' + server_id + '/lesson/' + lesson_id)
+                    axios.get(baseUrl + 'course/module/' + id.split("_")[1] + '/server/' + server_id + '/lesson/' + lessonId)
                         .then((response) => {
                             if (response.data.item) {
                                 content = response.data.item.content;
@@ -78,6 +79,7 @@ export class MoodleTopicsGridView extends DHXView {
 
                 } else {
 
+                    lessonId = null;
                     let course_id = this.app.getService("CoursesTree").course();
 
                     axios.get(baseUrl + 'course/page/' + id.split("_")[1] + '/server/' + server_id + '/course/' + course_id)
@@ -104,6 +106,7 @@ export class MoodleTopicsGridView extends DHXView {
 
         this.addService("TopicsGrid", {
             selected: () => sId,
+            lesson: () => lessonId,
         });
 
 

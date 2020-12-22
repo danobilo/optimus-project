@@ -15,14 +15,15 @@ export class MoodleTopicsLessonView extends DHXView {
             this.ui.cells(id).progressOff();
         });
 
-        let lessonId = this.app.getService("TopicsGrid").selected();
+        let lesson_id = this.app.getService("TopicsGrid").selected();
 
         this.ui.cells('a').progressOn();
-        axios.get(baseUrl + 'course/lesson/' + lessonId.split("_")[1])
+
+        axios.get(baseUrl + 'course/lesson/' + lesson_id.split("_")[1])
             .then((response) => {
                 if (response.data.success) {
                     this.ui.cells("a").attachURL(response.data.url);
-                    this.ui.cells(id).progressOff();
+                    this.ui.cells("a").progressOff();
                 }
             })
             .catch((e) => {

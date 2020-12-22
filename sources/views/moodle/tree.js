@@ -23,6 +23,7 @@ export class MoodleTreeView extends DHXView {
             server_id = selectedId[0];
 
             this.app.callEvent("loadTopicsGrid", [server_id, course_id]);
+            this.app.callEvent("loadMainQuestionsGrid",[course_id]);
         });
 
         this.addService("CoursesTree", {

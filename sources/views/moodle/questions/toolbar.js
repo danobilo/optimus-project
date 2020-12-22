@@ -23,7 +23,7 @@ export class MoodleQuestionsToolbarView extends DHXView {
             iconset: "awesome",
         });
         // this.ui.setIconSize(32);
-        // this.ui.attachEvent("onClick", (id) => this.app.callEvent("MoodleToolbarClick", [id]));
+        this.ui.attachEvent("onClick", (id) => this.app.callEvent("MainQuestionsToolbarClick", [id]));
         this.ui.loadStruct(struct);
 
     }
