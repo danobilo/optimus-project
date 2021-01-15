@@ -8,6 +8,8 @@ import {logout} from "../api/auth";
 import {SchedulerTeamView} from "./scheduler/team";
 import {SchedulerPersonalView} from "./scheduler/personal";
 import {MoodleView} from "./moodle/layout";
+import {ServersView} from "./servers/layout";
+import {DocsExtractView} from "./extractor/layout";
 
 
 export class TopView extends DHXView {
@@ -23,6 +25,10 @@ export class TopView extends DHXView {
                 this.show(ProjectsView, "main");
             else if (id === "moodle")
                 this.show(MoodleView, "main");
+            else if (id === "docs")
+                this.show(DocsExtractView, "main");
+            else if (id === "servers")
+                this.show(ServersView, "main");
             else if (id === "users")
                 this.show(UsersView, "main");
             else if (id === "roles")
