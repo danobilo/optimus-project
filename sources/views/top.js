@@ -10,6 +10,7 @@ import {SchedulerPersonalView} from "./scheduler/personal";
 import {MoodleView} from "./moodle/layout";
 import {ServersView} from "./servers/layout";
 import {DocsExtractView} from "./extractor/layout";
+import {SettingsView} from "./settings/layout";
 
 
 export class TopView extends DHXView {
@@ -39,6 +40,8 @@ export class TopView extends DHXView {
                 this.show(SchedulerTeamView, "main");
             else if (id == "schedule_personal")
                 this.show(SchedulerPersonalView, "main");
+            else if (id == "settings")
+                this.show(SettingsView, "main");
         });
 
         this.show(ProjectsView, "main");

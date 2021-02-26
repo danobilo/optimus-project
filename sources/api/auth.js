@@ -2,8 +2,10 @@ import axios from "axios";
 import decode from "jwt-decode";
 // import { EventBus } from './event-bus.js';
 import getBaseUrl from "./baseUrl";
+import {DHXAlertView} from "../helpers/alerts";
 
 const baseUrl = getBaseUrl();
+const appAlerts = new DHXAlertView();
 
 export default {
 
@@ -49,13 +51,15 @@ export function signin(context, user) {
     axios.post(baseUrl + "auth/login", user)
         .then(response => {
             // console.log(response.data);
-            if (response.data.access_token) {
+            if (response.data.success) {
                 // console.log('success');
                 localStorage.setItem("token", response.data.access_token);
+                appAlerts._message(response.data.message);
                 window.location.reload();
                 // context.$router.push("/account");
                 // EventBus.$emit('login', 'logged in')
             } else {
+                appAlerts._info(response.data.message);
                 // context.status = "error";
                 // context.errors = response.data;
             }

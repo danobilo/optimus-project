@@ -13,7 +13,7 @@ export class LoginView extends DHXView{
 
 			{type: "settings", position: "label-left", labelWidth: 75, inputWidth: 150},
 			{type: "block", blockOffset: 30, offsetTop: 15, width: "auto", list: [
-				{type: "label", label: "Please introduce yourself", labelWidth: "auto", offsetLeft: 35},
+				{type: "label", label: "Sign In:", labelWidth: "auto", offsetLeft: 35},
 				{type: "input", label: "Email", name: "email", value: "", offsetTop: 20},
 				{type: "password", label: "Password", name: "password", value: ""},
 				{type: "button", name: "submit", value: "Login", offsetTop: 20, offsetLeft: 72}
@@ -24,6 +24,7 @@ export class LoginView extends DHXView{
             // {type: "password", name: "password", label: "Password"},
             // {type: "button", name: "submit", value: "Save", offsetLeft: "150"},
 		]);
+		form.setSkin("dhx_web");
 		// this._load();
 		form.centerForm();
 
